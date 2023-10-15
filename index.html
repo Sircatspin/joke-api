@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Joke API</title>
+    <script>
+        async function getJoke() {
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/Sircatspin/joke-api/main/jokes.txt');
+                const data = await response.text();
+                const jokesArray = data.split('\n').filter(joke => joke); // Split the response into an array of jokes
+
+                const randomIndex = Math.floor(Math.random() * jokesArray.length); // Get a random index
+                const randomJoke = jokesArray[randomIndex].trim(); // Get a random joke from the array
+
+                document.getElementById('joke').textContent = randomJoke;
+            } catch (error) {
+                console.error('Failed to fetch jokes:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="getJoke()">Get Joke</button>
+    <p id="joke"></p>
+</body>
+</html>
