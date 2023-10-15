@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Joke API</title>
-    <script src="script.js"></script>
-</head>
-<body>
-    <h1>Joke of the Day</h1>
-    <div id="joke-container">
-        <!-- Jokes will be displayed here -->
-    </div>
-    <button onclick="getJoke()">Get Joke</button>
-</body>
+    <script>
+      function fetchJoke() {
+        fetch("https://raw.githubusercontent.com/Sircatspin/joke-api/main/jokes.txt")
+          .then(response => response.text())
+          .then(data => {
+            const jokes = data.split("\n");
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            document.getElementById("joke").innerText = jokes[randomIndex].trim();
+          })
+          .catch(error => console.log(error));
+      }
+    </script>
+  </head>
+  <body onload="fetchJoke()">
+    <h1>Joke API</h1>
+    <div id="joke"></div>
+    <button onclick="fetchJoke()">Load Another Joke</button>
+  </body>
 </html>
